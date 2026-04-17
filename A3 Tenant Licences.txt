@@ -60,3 +60,4 @@ let
     CleanedTable = Table.RemoveColumns(OnlyA3Users, {"AssignedLicenses"})
 in
     CleanedTable
+    
