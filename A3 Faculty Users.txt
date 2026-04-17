@@ -2,7 +2,7 @@ let
     TenantId = "PASTE_YOUR_TENANT_ID_HERE",
     ClientId = "PASTE_YOUR_CLIENT_ID_HERE",
     ClientSecret = "PASTE_YOUR_CLIENT_SECRET_HERE",
-    A3FacultySkuId = "PASTE_YOUR_SKU_ID_HERE",
+    A3FacultySkuId = "4b590615-0888-425a-a965-b3bf7789848d",
 
     // Get an access token
     TokenUrl = "https://login.microsoftonline.com/" & TenantId & "/oauth2/v2.0/token",
@@ -64,6 +64,3 @@ let
     SortedResult = Table.Sort(GroupedByDomain, {{"A3FacultyCount", Order.Descending}})
 in
     SortedResult
-
-
-Quick test  
