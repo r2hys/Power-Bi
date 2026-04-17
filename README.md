@@ -1,1 +1,1 @@
-Home Page for scripts used in connecting Power Bi With Microsoft 365.
+Home Page for scripts used in connecting Power Bi With Microsoft 365 for Licences.
