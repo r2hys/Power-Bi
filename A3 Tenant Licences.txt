@@ -1,8 +1,8 @@
 let
-    TenantId = "PASTE_YOUR_TENANT_ID_HERE",
-    ClientId = "PASTE_YOUR_CLIENT_ID_HERE",
-    ClientSecret = "PASTE_YOUR_CLIENT_SECRET_HERE",
-    A3FacultySkuId = "PASTE_YOUR_SKUID_HERE",
+    TenantId = "ENTER_TENANT_ID_HERE",
+    ClientId = "ENTER_CLIENT_ID_HERE",
+    ClientSecret = "ENTER_SECRET_VALUE_HERE",
+    A3FacultySkuId = "ENTER_SKU_ID_HERE",
 
     // Get an access token
     TokenUrl = "https://login.microsoftonline.com/" & TenantId & "/oauth2/v2.0/token",
@@ -53,11 +53,15 @@ let
         if licences = null then false
         else List.Contains(List.Transform(licences, each _[skuId]), A3FacultySkuId)),
 
-    // Keep only A3 Faculty holders
+    // Filter to only A3 Faculty holders
     OnlyA3Users = Table.SelectRows(WithA3Flag, each [HasA3Faculty] = true),
 
-    // Remove the AssignedLicenses column (no longer needed)
-    CleanedTable = Table.RemoveColumns(OnlyA3Users, {"AssignedLicenses"})
+    // Group by domain and count
+    GroupedByDomain = Table.Group(OnlyA3Users, {"Domain"}, {
+        {"A3FacultyCount", each Table.RowCount(_), Int64.Type}
+    }),
+
+    SortedResult = Table.Sort(GroupedByDomain, {{"A3FacultyCount", Order.Descending}})
 in
-    CleanedTable
-    
+    SortedResult
+
